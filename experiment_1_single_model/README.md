@@ -5,7 +5,12 @@ trajectory), how does **ST-LoRA (rank 8)** compare to **full fine-tuning (FRE)**
 **without augmentation**, across three segmentation backbones?
 
 **Architectures:** Mask2Former (Swin-B), SegFormer (MiT), EoMT (ViT-L).
-**Dataset:** BUP20 (sweet pepper, 8 classes). **Seeds:** `{42, 123, 456, 789, 1337}`.
+**Datasets:** BUP20 (sweet pepper, 8 classes) for M2F/SegFormer/EoMT; plus **GrowliFlower-L**
+(cauliflower, binary plant-vs-background) for a SegFormer-B2/B4 arm. **Seeds:** `{42, 123, 456, 789, 1337}`.
+
+Dataset links:
+- **BUP20** — https://phenoroam.phenorob.de/geonetwork/srv/eng/catalog.search#/metadata/b5d18108-53e1-46d1-873d-4230a72dfad7
+- **GrowliFlower-L** — https://phenoroam.phenorob.de/geonetwork/srv/eng/catalog.search#/metadata/cb328232-31f5-4b84-a929-8e1ee551d66a
 
 **What we report**
 - **Accuracy:** mIoU.
@@ -22,7 +27,7 @@ trajectory), how does **ST-LoRA (rank 8)** compare to **full fine-tuning (FRE)**
 
 ```
 experiment_1_single_model/
-├── env.sh          # set ST_LORA_ROOT + BUP20_DIR here (used by both run modes)
+├── env.sh          # set ST_LORA_ROOT + BUP20_DIR + GROWLI_DIR here (used by both run modes)
 ├── code/           # all Python (flat; scripts import each other by name)
 └── jobs/           # SLURM launchers (portable: ST_LORA_ROOT, relative logs, no personal info)
 ```
@@ -41,6 +46,20 @@ Matching SLURM launchers in `jobs/`: `*_train*.sh`, `eval_noaug.sh`, `eomt_stlor
 `co2_train.sh` / `segformer_co2_train.sh` / `eomt_co2_train_5seeds.sh`, `plot_co2_energy.sh` /
 `segformer_co2_plot.sh`, `co2_crossarch_sig.sh`, `agg_co2_eomt_3arm.sh`.
 
+### SegFormer-B2 / B4 on GrowliFlower-L (binary plant vs background)
+
+Same single-model, no-aug, ST-LoRA-r8-vs-FRE comparison, on a second dataset with two SegFormer
+backbones. One trainer + one eval cover both backbones and both methods (env vars `BACKBONE=b2|b4`,
+`METHOD=stlora|fre`):
+
+| Role | Script | Job |
+|---|---|---|
+| Train (B2/B4, ST-LoRA r8 or FRE) | `segformer_growli_train_seeded.py` | `segformer_growli_train.sh` |
+| Evaluate single model (mIoU + all calibration) | `segformer_growli_eval_seeded.py` | `segformer_growli_eval.sh` |
+
+Backbones: `nvidia/segformer-b2-finetuned-ade-512-512`, `nvidia/segformer-b4-finetuned-ade-512-512`.
+Labels: `maskPlants` raw>0 → plant (1), `maskVoid` raw>0 → ignore (255), else background (0).
+
 ---
 
 ## Setup
@@ -52,11 +71,12 @@ conda env create -f ../environment_eomt.yml    # -> st_lora_eomt (EoMT)
 # CO2 runs additionally need codecarbon in the EoMT env clone (see env.sh: ENV_EOMT_CC)
 
 # 2) point env.sh at your data + choose where outputs go
-$EDITOR env.sh          # set BUP20_DIR (and ST_LORA_ROOT if you don't want the default)
+$EDITOR env.sh          # set BUP20_DIR, GROWLI_DIR (and ST_LORA_ROOT if not using the default)
 source env.sh
 ```
-BUP20 download: **<add link>**. `BUP20_DIR` should contain the COCO-style annotation json
-(`BUP20_COCO`) and the images; adjust those two variables in `env.sh` to your layout.
+`BUP20_DIR` should contain the COCO-style annotation json (`BUP20_COCO`) and the images.
+`GROWLI_DIR` should contain `images/{Train,Val,Test}` and `labels/{Train,Val,Test}/{maskPlants,maskVoid,…}`.
+Download links are at the top of this file.
 
 ---
 
@@ -91,6 +111,15 @@ METHOD=stlora sbatch jobs/eomt_co2_train_5seeds.sh ; METHOD=fullft sbatch jobs/e
 # then aggregate / plot / test
 sbatch jobs/plot_co2_energy.sh ; sbatch jobs/segformer_co2_plot.sh
 sbatch jobs/agg_co2_eomt_3arm.sh ; sbatch jobs/co2_crossarch_sig.sh
+
+# --- SegFormer-B2/B4 on GrowliFlower-L (binary): train then single-model eval ---
+for BB in b2 b4; do for M in stlora fre; do
+  BACKBONE=$BB METHOD=$M sbatch jobs/segformer_growli_train.sh
+done; done
+# after training finishes:
+for BB in b2 b4; do for M in stlora fre; do
+  BACKBONE=$BB METHOD=$M sbatch jobs/segformer_growli_eval.sh
+done; done
 ```
 
 ---
