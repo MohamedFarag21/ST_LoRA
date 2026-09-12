@@ -1,0 +1,37 @@
+# ST-LoRA main environment (`ssl`) — Mask2Former + SegFormer experiments.
+# Recreate with:  conda env create -f environment.yml  &&  conda activate st_lora
+#
+# On the HPC cluster this env is loaded as:
+#   module purge; module load CUDA/12.6.0 Miniforge3; source activate ssl
+#
+# EoMT experiments need a separate env (transformers 5.14.1) — see environment_eomt.yml / README.
+name: st_lora
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.11.5
+  - pip
+  - pip:
+      # install torch from the CUDA 12.6 wheel index (see requirements.txt header)
+      - torch==2.7.0
+      - torchvision==0.22.0
+      - pytorch-lightning==2.5.1.post0
+      - lightning==2.5.1.post0
+      - transformers==4.52.2
+      - peft==0.15.2
+      - accelerate==1.7.0
+      - huggingface-hub==0.31.4
+      - safetensors==0.5.3
+      - evaluate==0.4.3
+      - torchmetrics==1.7.1
+      - torch_uncertainty==0.5.0
+      - numpy==2.2.6
+      - scipy==1.15.3
+      - scikit-learn==1.6.1
+      - scikit-image==0.25.2
+      - pillow==11.2.1
+      - matplotlib==3.10.3
+      - tqdm==4.67.1
+      - PyYAML==6.0.2
