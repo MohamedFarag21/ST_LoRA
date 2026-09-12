@@ -1,0 +1,342 @@
+[
+  {
+    "name": "baseline",
+    "family": "baseline+rank+alpha+dropout+modules+structural",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r2",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 2,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r4",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 4,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r16",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 16,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r32",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 32,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r64",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 64,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r128",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 128,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "rank_r256",
+    "family": "rank",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 256,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a1",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 1,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a2",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 2,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a4",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 4,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a16",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a32",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 32,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "alpha_a64",
+    "family": "alpha",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 64,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "drop_05",
+    "family": "dropout",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.05,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "drop_15",
+    "family": "dropout",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.15,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "drop_20",
+    "family": "dropout",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.2,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "drop_25",
+    "family": "dropout",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.25,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "drop_30",
+    "family": "dropout",
+    "roles": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.3,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_encattn",
+    "family": "modules",
+    "roles": [
+      "enc_attn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_encffn",
+    "family": "modules",
+    "roles": [
+      "enc_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_decffn",
+    "family": "modules",
+    "roles": [
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_encattn+encffn",
+    "family": "modules",
+    "roles": [
+      "enc_attn",
+      "enc_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_encattn+decffn",
+    "family": "modules",
+    "roles": [
+      "enc_attn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "mod_encffn+decffn",
+    "family": "modules",
+    "roles": [
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "lora"
+  },
+  {
+    "name": "struct_encoder_only",
+    "family": "structural",
+    "roles": [
+      "enc_attn",
+      "enc_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "frozen"
+  },
+  {
+    "name": "struct_enc_lora_dec_fullft",
+    "family": "structural",
+    "roles": [
+      "enc_attn",
+      "enc_ffn"
+    ],
+    "lora_r": 8,
+    "lora_alpha": 8,
+    "lora_dropout": 0.1,
+    "decoder_mode": "fullft"
+  }
+]

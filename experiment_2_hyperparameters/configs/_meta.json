@@ -1,0 +1,76 @@
+{
+  "components": {
+    "m2f": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_attn",
+      "dec_ffn"
+    ],
+    "segformer": [
+      "enc_attn",
+      "enc_ffn",
+      "dec_ffn"
+    ],
+    "eomt": [
+      "enc_attn",
+      "enc_ffn",
+      "mask_ffn"
+    ]
+  },
+  "decoder_container": {
+    "m2f": "transformer_module.decoder",
+    "segformer": "decode_head",
+    "eomt": "mask_head"
+  },
+  "head_target": {
+    "m2f": [
+      "class_predictor"
+    ],
+    "segformer": [],
+    "eomt": [
+      "class_predictor"
+    ]
+  },
+  "head_save": {
+    "m2f": [],
+    "segformer": [
+      "classifier"
+    ],
+    "eomt": [
+      "upscale_block"
+    ]
+  },
+  "ranks": [
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "alphas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "dropouts": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "baseline": {
+    "r": 8,
+    "alpha": 8,
+    "dropout": 0.1
+  },
+  "dataset": "BUP20"
+}
