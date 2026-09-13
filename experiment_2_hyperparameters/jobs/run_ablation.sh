@@ -55,15 +55,15 @@ else
     python "$CODE/$TRAIN" $COMMON --lr $LR --lr_min $LRMIN --precision $PREC --no_dora
 fi
 
-# ---- single-model eval (last snapshot, shot 5): mIoU + all calibration metrics ----
-echo "=== EVAL $ARCH $NAME seed=$SEED shot 5 ==="
+# ---- ST-LoRA snapshot-ensemble eval (last FOUR snapshots: shots 2 3 4 5): mIoU + all calibration ----
+echo "=== EVAL $ARCH $NAME seed=$SEED shots 2 3 4 5 (last-4 snapshot ensemble) ==="
 case "$ARCH" in
-  m2f)       python "$CODE/$EVAL" --results_dir "$OUT" --seed "$SEED" --shot_ids 5 --split test \
+  m2f)       python "$CODE/$EVAL" --results_dir "$OUT" --seed "$SEED" --shot_ids 2 3 4 5 --split test \
                     --coco_file "$BUP20_COCO" --root_dir "$BUP20_DIR" ;;
   segformer) python "$CODE/$EVAL" --results_dir "$OUT" --config_name "r$LORA_R" --seed "$SEED" \
-                    --shot_ids 5 --split test --pretrained "$PRETRAINED" \
+                    --shot_ids 2 3 4 5 --split test --pretrained "$PRETRAINED" \
                     --coco_file "$BUP20_COCO" --root_dir "$BUP20_DIR" ;;
-  eomt)      python "$CODE/$EVAL" --base_save_dir "$OUT" --seed "$SEED" --shot_ids 5 \
+  eomt)      python "$CODE/$EVAL" --base_save_dir "$OUT" --seed "$SEED" --shot_ids 2 3 4 5 \
                     --out_dir "$OUT/seed_$SEED" --split test ;;
 esac
 echo "=== done arch=$ARCH idx=$IDX ($NAME) seed=$SEED $(date) ==="

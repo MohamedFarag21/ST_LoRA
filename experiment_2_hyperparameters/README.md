@@ -1,8 +1,9 @@
 # Experiment 2 — ST-LoRA hyperparameter ablation
 
-How ST-LoRA's **rank**, **scaling factor α**, **dropout**, and **target modules** affect a single
-fine-tuned model, across **Mask2Former**, **SegFormer-B2**, and **EoMT**. Dataset: **BUP20**
-(sweet pepper). **All runs use `--no_augmentation`.** Single model (last snapshot, no ensembling).
+How ST-LoRA's **rank**, **scaling factor α**, **dropout**, and **target modules** affect the model,
+across **Mask2Former**, **SegFormer-B2**, and **EoMT**. Dataset: **BUP20**
+(sweet pepper). **All runs use `--no_augmentation`.** Each config is evaluated as the **ST-LoRA
+snapshot ensemble of the last four snapshots (shots 2, 3, 4, 5)** — mean softmax of the four.
 We report **mIoU + all calibration metrics** (ECE / MECE / ACE / MACE / Brier / NLL).
 
 **Baseline** (fixed point of every 1-D sweep): `r = α = 8`, `dropout = 0.1`, LoRA on
@@ -47,7 +48,7 @@ experiment_2_hyperparameters/
 │   ├── resolve_targets.py     # collision-safe role -> explicit module names (+ --assert)
 │   ├── prepare_run.py         # catalog entry -> trainer flags
 │   ├── *_lora_train_seeded*.py  # the 3 trainers (patched: --fullft_modules)
-│   └── *_eval*.py             # single-model evaluation (mIoU + calibration)
+│   └── *_eval*.py             # snapshot-ensemble evaluation (mIoU + calibration)
 └── jobs/
     ├── run_ablation.sh        # array runner: one task = one config (per arch, per seed)
     └── efficiency_ffn_vs_attn.sh
@@ -80,7 +81,7 @@ done
 sbatch jobs/efficiency_ffn_vs_attn.sh
 ```
 Each task trains (110 ep, cosine T0=20, snapshots every 20, **no augmentation**) then evaluates the
-single last snapshot (shot 5). Results land in `results/exp2/<arch>/<config>/seed_<S>/`.
+**last-four-snapshot ensemble (shots 2 3 4 5)**. Results land in `results/exp2/<arch>/<config>/seed_<S>/`.
 
 ## Run — no SLURM (single GPU)
 
