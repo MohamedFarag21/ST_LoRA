@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ST-LoRA — Single-Trajectory LoRA Ensemble for Uncertainty-Aware Agricultural Segmentation</title>
+<meta name="description" content="Project page for ST-LoRA: a single-trajectory snapshot LoRA ensemble for parameter-efficient, calibrated, uncertainty-aware agricultural semantic segmentation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f6f8f6; --ink:#161a17; --muted:#5b6660;
+    --accent:#2e7d51; --accent-2:#1f5f3c; --border:#e3e8e4; --code:#0f2419;
+    --maxw:900px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  /* hero */
+  header{padding:64px 0 8px;text-align:center;
+    background:linear-gradient(180deg,#f2f7f3 0%,#ffffff 100%);border-bottom:1px solid var(--border)}
+  h1{font-family:Newsreader,Georgia,serif;font-weight:700;font-size:clamp(1.7rem,4.2vw,2.9rem);
+    line-height:1.15;margin:.2em 0 .1em;letter-spacing:-.01em}
+  .tagline{color:var(--muted);font-size:clamp(1rem,2.2vw,1.2rem);font-weight:500;margin:0 auto 1.3em;max-width:720px}
+  .venue{display:inline-block;font-size:.82rem;font-weight:600;color:var(--accent-2);
+    background:#e7f1ea;border:1px solid #cfe3d6;border-radius:999px;padding:4px 14px;margin-bottom:1.2em}
+  .authors{font-size:1.06rem;font-weight:500;margin:.4em 0 .2em}
+  .authors .ph{color:var(--accent-2)}
+  sup{font-weight:600;color:var(--accent-2)}
+  .affil{color:var(--muted);font-size:.95rem;margin:.1em 0 .3em}
+  .note{color:#9aa39d;font-size:.82rem}
+  /* buttons */
+  .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:1.6em 0 2.2em}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--code);color:#fff;
+    border-radius:999px;padding:10px 20px;font-weight:600;font-size:.95rem;border:1px solid var(--code);
+    transition:transform .08s ease,background .15s ease}
+  .btn:hover{background:var(--accent-2);border-color:var(--accent-2);text-decoration:none;transform:translateY(-1px)}
+  .btn svg{width:17px;height:17px;fill:currentColor}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--border)}
+  .btn.ghost:hover{background:var(--panel);color:var(--accent-2)}
+  /* sections */
+  section{padding:44px 0}
+  section + section{border-top:1px solid var(--border)}
+  h2{font-family:Newsreader,Georgia,serif;font-size:1.7rem;font-weight:600;text-align:center;margin:0 0 .1em}
+  .sub{text-align:center;color:var(--muted);margin:0 0 1.6em}
+  p.body{font-size:1.02rem}
+  .abstract{max-width:780px;margin:0 auto;text-align:justify}
+  /* video */
+  .videobox{max-width:840px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid var(--border);
+    box-shadow:0 10px 30px rgba(20,40,25,.08);background:#000}
+  .videobox video{display:block;width:100%;height:auto}
+  figcaption{color:var(--muted);font-size:.9rem;text-align:center;margin-top:.7em}
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:.6em}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .card h3{margin:.1em 0 .4em;font-size:1.08rem}
+  .card .k{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+  .card p{margin:.3em 0 .6em;font-size:.95rem;color:#333}
+  .card a{font-size:.9rem;font-weight:600}
+  .pill{display:inline-block;background:#e7f1ea;color:var(--accent-2);border-radius:6px;
+    padding:2px 8px;font-size:.78rem;font-weight:600;margin:2px 4px 2px 0}
+  /* highlights list */
+  ul.hl{max-width:780px;margin:0 auto;padding-left:1.1em}
+  ul.hl li{margin:.4em 0}
+  /* placeholder marker */
+  .todo{background:#fff5e6;border:1px dashed #e0b877;color:#8a5a12;border-radius:8px;
+    padding:2px 8px;font-size:.85rem;font-weight:600}
+  .figph{max-width:820px;margin:1em auto 0;border:1px dashed var(--border);border-radius:14px;
+    background:var(--panel);color:var(--muted);text-align:center;padding:48px 20px;font-size:.95rem}
+  /* bibtex */
+  pre.bib{background:var(--code);color:#dfeee6;border-radius:12px;padding:20px;overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86rem;line-height:1.5;position:relative}
+  .copy{position:absolute;top:10px;right:10px;background:#ffffff22;color:#fff;border:1px solid #ffffff44;
+    border-radius:7px;padding:5px 11px;font-size:.8rem;font-weight:600;cursor:pointer}
+  .copy:hover{background:#ffffff33}
+  footer{padding:34px 0 60px;text-align:center;color:var(--muted);font-size:.9rem}
+  @media (max-width:520px){ header{padding-top:40px} .btn{padding:9px 15px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="venue">Under review · 2026 &nbsp;<span class="note">(update venue)</span></div>
+    <h1>ST-LoRA: Single-Trajectory LoRA Ensemble<br>for Uncertainty-Aware Agricultural Segmentation</h1>
+    <p class="tagline">Turning one cosine-restart training run into a parameter-efficient, calibrated
+      snapshot ensemble — across Mask2Former, SegFormer, and EoMT.</p>
+
+    <div class="authors">
+      <span class="ph">First Author</span><sup>1</sup>,
+      <span class="ph">Second Author</span><sup>1</sup>,
+      <span class="ph">Third Author</span><sup>2</sup>
+      &nbsp;<span class="todo">replace with real authors</span>
+    </div>
+    <div class="affil"><sup>1</sup> Institution One &nbsp;·&nbsp; <sup>2</sup> Institution Two</div>
+    <div class="note">*equal contribution &nbsp;·&nbsp; ✉ corresponding author</div>
+
+    <div class="btns">
+      <a class="btn" href="#" title="add PDF link">
+        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5z"/></svg>Paper</a>
+      <a class="btn ghost" href="#" title="add arXiv link">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none"/><path d="M3 5h18v2H3zm0 6h18v2H3zm0 6h12v2H3z"/></svg>arXiv</a>
+      <a class="btn" href="https://github.com/MohamedFarag21/ST_LoRA" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-1.9c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>Code</a>
+      <a class="btn ghost" href="#video">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</a>
+    </div>
+  </div>
+</header>
+
+<section id="abstract">
+  <div class="wrap">
+    <h2>Abstract</h2>
+    <p class="body abstract">
+      Deep segmentation models for agriculture must be both accurate and <em>trustworthy</em> — they
+      should know when they are uncertain — yet the deep ensembles that provide calibrated uncertainty
+      are expensive to train and store. <strong>ST-LoRA</strong> (Single-Trajectory LoRA) obtains an
+      ensemble from a <em>single</em> parameter-efficient fine-tuning run: periodic snapshots taken along
+      one cosine-restart trajectory are ensembled at inference, giving calibrated, uncertainty-aware
+      predictions at a fraction of the trainable parameters and cost of full fine-tuning (FRE). We study
+      ST-LoRA across three architectures — Mask2Former (Swin-B), SegFormer (MiT), and EoMT (ViT-L) — on
+      agricultural datasets, analysing which LoRA components matter, how the method compares to full
+      fine-tuning in accuracy, calibration and training cost, and how it behaves under covariate shift.
+      <br><span class="todo">Draft abstract — edit to match the paper.</span>
+    </p>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <h2>Video</h2>
+    <p class="sub">A short walkthrough of the method and findings.</p>
+    <figure class="videobox">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="FullStory.mp4" type="video/mp4">
+        Your browser does not support the video tag —
+        <a href="FullStory.mp4">download the video</a>.
+      </video>
+    </figure>
+    <figcaption>ST-LoRA walkthrough (FullStory.mp4).</figcaption>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>Method</h2>
+    <p class="sub">One training trajectory → many ensemble members.</p>
+    <ul class="hl">
+      <li><strong>Single-trajectory snapshot ensemble.</strong> A cosine warm-restart schedule yields
+        several snapshots along one run; the last four are ensembled (mean softmax) at inference.</li>
+      <li><strong>Parameter-efficient.</strong> Only low-rank LoRA adapters (plus the task head) are
+        trained — the pretrained backbone stays frozen, so members share it and storage is tiny.</li>
+      <li><strong>Calibration-aware.</strong> Evaluated with float64 streaming ECE/ACE alongside mIoU and
+        proper scores (Brier, NLL), avoiding float32 calibration artifacts.</li>
+      <li><strong>Architecture-agnostic.</strong> The same recipe applies to Mask2Former, SegFormer and
+        EoMT via collision-safe adapter placement on attention and feed-forward layers.</li>
+    </ul>
+    <div class="figph">Method / teaser figure goes here &nbsp;<span class="todo">add figure (e.g. method.png)</span></div>
+  </div>
+</section>
+
+<section id="experiments">
+  <div class="wrap">
+    <h2>Experiments</h2>
+    <p class="sub">Released as self-contained, reproducible experiments.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="k">Experiment 1</div>
+        <h3>Single-model efficiency</h3>
+        <p>ST-LoRA (rank 8) vs full fine-tuning (no augmentation): mIoU, all calibration metrics, and
+          efficiency — trainable parameters, wall-clock, GPU energy, CO₂.</p>
+        <span class="pill">Mask2Former</span><span class="pill">SegFormer</span><span class="pill">EoMT</span>
+        <br><a href="https://github.com/MohamedFarag21/ST_LoRA/tree/main/experiment_1_single_model" target="_blank" rel="noopener">code →</a>
+      </div>
+      <div class="card">
+        <div class="k">Experiment 2</div>
+        <h3>Hyperparameter ablation</h3>
+        <p>How rank, scaling α, dropout and target modules affect the ST-LoRA ensemble — with structural
+          variants (encoder-only, decoder full-FT) and an FFN-vs-attention efficiency study.</p>
+        <span class="pill">rank</span><span class="pill">α</span><span class="pill">dropout</span><span class="pill">targets</span>
+        <br><a href="https://github.com/MohamedFarag21/ST_LoRA/tree/main/experiment_2_hyperparameters" target="_blank" rel="noopener">code →</a>
+      </div>
+      <div class="card">
+        <div class="k">Experiment 3</div>
+        <h3>Covariate shift</h3>
+        <p>Robustness under photometric and geometric corruptions: augmentation importance
+          (SegFormer / GrowliFlower-L) and component sensitivity (Mask2Former / BUP20).</p>
+        <span class="pill">mIoU</span><span class="pill">ECE</span><span class="pill">shift</span>
+        <br><a href="https://github.com/MohamedFarag21/ST_LoRA/tree/main/experiment_3_covariate_shift" target="_blank" rel="noopener">code →</a>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:1.6em">Datasets:
+      <a href="https://phenoroam.phenorob.de/geonetwork/srv/eng/catalog.search#/metadata/b5d18108-53e1-46d1-873d-4230a72dfad7" target="_blank" rel="noopener">BUP20</a> (sweet pepper) ·
+      <a href="https://phenoroam.phenorob.de/geonetwork/srv/eng/catalog.search#/metadata/cb328232-31f5-4b84-a929-8e1ee551d66a" target="_blank" rel="noopener">GrowliFlower-L</a> (cauliflower).</p>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="wrap">
+    <h2>BibTeX</h2>
+    <p class="sub"><span class="todo">Replace with the final citation once available.</span></p>
+    <pre class="bib" id="bib"><button class="copy" onclick="copyBib()">Copy</button>@article{stlora2026,
+  title   = {ST-LoRA: Single-Trajectory LoRA Ensemble for Uncertainty-Aware Agricultural Segmentation},
+  author  = {First Author and Second Author and Third Author},
+  journal = {Under review},
+  year    = {2026},
+  url     = {https://github.com/MohamedFarag21/ST_LoRA}
+}</pre>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Code: <a href="https://github.com/MohamedFarag21/ST_LoRA">github.com/MohamedFarag21/ST_LoRA</a></p>
+    <p class="note">Project page template — design is free to reuse. Update authors, links, abstract, figure and BibTeX before publishing.</p>
+  </div>
+</footer>
+
+<script>
+  function copyBib(){
+    var el = document.getElementById('bib');
+    var txt = el.innerText.replace(/^Copy\s*/, '');
+    navigator.clipboard.writeText(txt).then(function(){
+      var b = el.querySelector('.copy'); var old = b.innerText;
+      b.innerText = 'Copied!'; setTimeout(function(){ b.innerText = old; }, 1400);
+    });
+  }
+</script>
+</body>
+</html>
