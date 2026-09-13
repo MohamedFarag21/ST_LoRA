@@ -9,11 +9,10 @@ Scaling, Dirichlet, LTS, Meta-Cal). Four parts:
 | **a** | In-distribution performance | BUP20 | mIoU + calibration (ECE/ACE/MECE/MACE/Brier/NLL) |
 | **b** | Under covariate shift | BUP20 | mIoU + calibration + shift-degradation plots |
 | **c** | Image- & pixel-level OoD detection | GrowliFlower-L, BUTom21 (tomato) | AUROC / FPR95 (image & pixel) |
-| **d** | FRE vs ST-LoRA significance on a/b/c | — | bootstrap CI + paired-t + Wilcoxon (no Holm) |
+| **d** | FRE vs ST-LoRA significance on a/b/c | — | bootstrap CI + paired-t + Wilcoxon |
 
 Models: ST-LoRA = the deployed `final_model` (rank 32, full augmentation); FRE = `full_ft` (full
-augmentation); 5 seeds `{42,123,456,789,1337}`, report mean ± std. Calibration/mIoU use the float64
-streaming metric (avoids float32 ECE artifacts). The post-hoc calibrators are **fit at 320×180 and
+augmentation); 5 seeds `{42,123,456,789,1337}`, report mean ± std. The post-hoc calibrators are **fit at 320×180 and
 evaluated at native resolution** without recalibration.
 
 ## Files by part
@@ -89,9 +88,7 @@ from the matching `jobs/*.sh`.
 
 ## Notes
 
-- **Significance policy:** bootstrap CI + paired t-test + Wilcoxon, reported for FRE vs ST-LoRA; no
-  multiple-comparison (Holm/BH) correction, consistently across the study.
-- **Calibration numerics:** float64 `StreamBinMetrics` (uniform + adaptive bins).
+- **Significance:** FRE vs ST-LoRA reported with bootstrap CI + paired t-test + Wilcoxon.
 - The image/pixel-level OoD uses the native-palette segmentation masks for GrowliFlower-L and the
   tomato (BUTom21) frames.
 - Seeds `{42,123,456,789,1337}`.
