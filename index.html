@@ -87,24 +87,29 @@
 
 <header>
   <div class="wrap">
-    <div class="venue">Under review · 2026 &nbsp;<span class="note">(update venue)</span></div>
+    <div class="venue">arXiv:2608.01530 · cs.CV · Aug 2026</div>
     <h1>ST-LoRA: Single-Trajectory LoRA Ensemble<br>for Uncertainty-Aware Agricultural Segmentation</h1>
-    <p class="tagline">Turning one cosine-restart training run into a parameter-efficient, calibrated
-      snapshot ensemble — across Mask2Former, SegFormer, and EoMT.</p>
+    <p class="tagline">A parameter-efficient ensemble from a single training trajectory — calibrated,
+      uncertainty-aware segmentation with SegFormer and Mask2Former.</p>
 
     <div class="authors">
-      <span class="ph">First Author</span><sup>1</sup>,
-      <span class="ph">Second Author</span><sup>1</sup>,
-      <span class="ph">Third Author</span><sup>2</sup>
-      &nbsp;<span class="todo">replace with real authors</span>
+      Mohamed Farag<sup>1,2</sup>&nbsp;<span title="corresponding author">✉</span>,
+      Genc Hoxha<sup>1,2</sup>,
+      Yahya Maleki<sup>1,2</sup>,
+      Chris McCool<sup>3</sup>,
+      Ribana Roscher<sup>1,2</sup>
     </div>
-    <div class="affil"><sup>1</sup> Institution One &nbsp;·&nbsp; <sup>2</sup> Institution Two</div>
-    <div class="note">*equal contribution &nbsp;·&nbsp; ✉ corresponding author</div>
+    <div class="affil">
+      <sup>1</sup> Machine Learning in Agriculture Lab, University of Bonn, Germany &nbsp;·&nbsp;
+      <sup>2</sup> Lamarr Institute for ML and AI, University of Bonn, Germany &nbsp;·&nbsp;
+      <sup>3</sup> CSIRO, Australia
+    </div>
+    <div class="note">✉ Corresponding author: <a href="mailto:mibrahi2@uni-bonn.de">mibrahi2@uni-bonn.de</a></div>
 
     <div class="btns">
-      <a class="btn" href="#" title="add PDF link">
-        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5z"/></svg>Paper</a>
-      <a class="btn ghost" href="#" title="add arXiv link">
+      <a class="btn" href="https://arxiv.org/pdf/2608.01530" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5z"/></svg>Paper (PDF)</a>
+      <a class="btn ghost" href="https://arxiv.org/abs/2608.01530" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none"/><path d="M3 5h18v2H3zm0 6h18v2H3zm0 6h12v2H3z"/></svg>arXiv</a>
       <a class="btn" href="https://github.com/MohamedFarag21/ST_LoRA" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-1.9c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>Code</a>
@@ -118,16 +123,30 @@
   <div class="wrap">
     <h2>Abstract</h2>
     <p class="body abstract">
-      Deep segmentation models for agriculture must be both accurate and <em>trustworthy</em> — they
-      should know when they are uncertain — yet the deep ensembles that provide calibrated uncertainty
-      are expensive to train and store. <strong>ST-LoRA</strong> (Single-Trajectory LoRA) obtains an
-      ensemble from a <em>single</em> parameter-efficient fine-tuning run: periodic snapshots taken along
-      one cosine-restart trajectory are ensembled at inference, giving calibrated, uncertainty-aware
-      predictions at a fraction of the trainable parameters and cost of full fine-tuning (FRE). We study
-      ST-LoRA across three architectures — Mask2Former (Swin-B), SegFormer (MiT), and EoMT (ViT-L) — on
-      agricultural datasets, analysing which LoRA components matter, how the method compares to full
-      fine-tuning in accuracy, calibration and training cost, and how it behaves under covariate shift.
-      <br><span class="todo">Draft abstract — edit to match the paper.</span>
+      Reliable decision-support in digital agriculture requires not only accurate predictions but also
+      well-calibrated uncertainty estimates, particularly for dense prediction tasks such as semantic
+      segmentation. While ensemble methods provide strong uncertainty quantification, their computational
+      and memory demands limit practical applicability, whereas single-model approximations often
+      compromise uncertainty quality for efficiency. We propose ST-LoRA, a parameter-efficient ensemble
+      framework that constructs diverse ensemble members from a single training trajectory by combining
+      Low-Rank Adaptation (LoRA) with snapshot ensembling. Each member shares a frozen pretrained backbone
+      and differs only in its lightweight low-rank adapters, reducing trainable parameters to less than
+      10% of the full model while preserving ensemble diversity. We conduct a comprehensive evaluation
+      across two agricultural datasets — GrowliFlower-L (cauliflower, close-range/open field) and BUP20
+      (sweet pepper, close-range/glasshouse) — using SegFormer and Mask2Former architectures. Our
+      evaluation covers in-distribution performance, calibration under distribution shift, and
+      out-of-distribution detection. Extensive ablation reveals that feed-forward layers are the critical
+      LoRA target for dense prediction — contrary to the attention-only convention established in language
+      models. ST-LoRA matches or exceeds full-rank ensembles in segmentation accuracy and calibration
+      across both datasets and architectures, while significantly reducing training time, inference
+      latency, memory footprint, and storage requirements. Compared to efficient baselines including
+      Snapshot Ensemble, MC Dropout, and Deep Deterministic Uncertainty, ST-LoRA consistently matches or
+      outperforms them in image/pixel level out-of-distribution detection, calibration stability under
+      distribution shift, and cross-seed variance, while requiring significantly fewer parameters and
+      lower computational overhead. These results indicate that LoRA efficient ensemble adaptation is not
+      merely a coarse approximation to full-rank ensembling, but rather a highly effective approach that
+      offers a compelling efficiency-performance trade-off, making it a strong and practical competitor
+      for uncertainty-aware agricultural vision systems.
     </p>
   </div>
 </section>
@@ -158,8 +177,11 @@
         trained — the pretrained backbone stays frozen, so members share it and storage is tiny.</li>
       <li><strong>Calibration-aware.</strong> Evaluated with float64 streaming ECE/ACE alongside mIoU and
         proper scores (Brier, NLL), avoiding float32 calibration artifacts.</li>
-      <li><strong>Architecture-agnostic.</strong> The same recipe applies to Mask2Former, SegFormer and
-        EoMT via collision-safe adapter placement on attention and feed-forward layers.</li>
+      <li><strong>Feed-forward layers are the critical target.</strong> Our ablation shows that adapting
+        the feed-forward layers — not attention alone — is what matters for dense prediction, contrary to
+        the attention-only convention from language models.</li>
+      <li><strong>Architecture-agnostic.</strong> The same recipe applies to SegFormer and Mask2Former
+        via collision-safe adapter placement on attention and feed-forward layers.</li>
     </ul>
     <div class="figph">Method / teaser figure goes here &nbsp;<span class="todo">add figure (e.g. method.png)</span></div>
   </div>
@@ -204,21 +226,21 @@
 <section id="bibtex">
   <div class="wrap">
     <h2>BibTeX</h2>
-    <p class="sub"><span class="todo">Replace with the final citation once available.</span></p>
-    <pre class="bib" id="bib"><button class="copy" onclick="copyBib()">Copy</button>@article{stlora2026,
+    <pre class="bib" id="bib"><button class="copy" onclick="copyBib()">Copy</button>@article{farag2026stlora,
   title   = {ST-LoRA: Single-Trajectory LoRA Ensemble for Uncertainty-Aware Agricultural Segmentation},
-  author  = {First Author and Second Author and Third Author},
-  journal = {Under review},
-  year    = {2026},
-  url     = {https://github.com/MohamedFarag21/ST_LoRA}
+  author  = {Farag, Mohamed and Hoxha, Genc and Maleki, Yahya and McCool, Chris and Roscher, Ribana},
+  journal = {arXiv preprint arXiv:2608.01530},
+  year    = {2026}
 }</pre>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>Code: <a href="https://github.com/MohamedFarag21/ST_LoRA">github.com/MohamedFarag21/ST_LoRA</a></p>
-    <p class="note">Project page template — design is free to reuse. Update authors, links, abstract, figure and BibTeX before publishing.</p>
+    <p>Paper: <a href="https://arxiv.org/abs/2608.01530">arXiv:2608.01530</a> &nbsp;·&nbsp;
+       Code: <a href="https://github.com/MohamedFarag21/ST_LoRA">github.com/MohamedFarag21/ST_LoRA</a></p>
+    <p class="note">Machine Learning in Agriculture Lab &amp; Lamarr Institute, University of Bonn · CSIRO.
+       A method/teaser figure can still be added to the Method section.</p>
   </div>
 </footer>
 
