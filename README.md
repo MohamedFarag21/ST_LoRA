@@ -22,6 +22,7 @@ The study is released as self-contained experiments — each folder has its own 
 |---|---|
 | [`experiment_1_single_model/`](experiment_1_single_model/) | **Single model** (last snapshot, no ensembling): ST-LoRA (rank 8) vs full fine-tuning (FRE), no augmentation — mIoU, all calibration metrics, and efficiency (trainable params, wall-clock, GPU energy, CO₂). Includes a SegFormer-B2/B4 arm on GrowliFlower-L. |
 | [`experiment_2_hyperparameters/`](experiment_2_hyperparameters/) | **ST-LoRA hyperparameter ablation** (evaluated as the last-four-snapshot ensemble): rank, scaling factor α, dropout, and target modules — plus structural variants (encoder-only, encoder-LoRA + decoder full-FT, encoder+decoder) and an FFN-only vs FFN+attention efficiency comparison. |
+| [`experiment_3_covariate_shift/`](experiment_3_covariate_shift/) | **Performance under covariate shift** (mIoU + ECE, last-four-snapshot ensemble): (3a) SegFormer-B2 / GrowliFlower-L augmentation importance — ST-LoRA & FRE, homogeneous (no aug) vs heterogeneous (rotation + hflip) ensembles; (3b) Mask2Former / BUP20 hyperparameter component sensitivity under shift. |
 
 More experiments will be added here.
 
