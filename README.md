@@ -77,6 +77,18 @@ experiments use the 5-seed set `{42, 123, 456, 789, 1337}` and report mean ± st
 
 The paper is under review; BibTeX will be added on acceptance.
 
+## Credits
+
+This code was originally developed by **Mohamed Farag**, and has been iteratively edited with the
+assistance of **Claude** (Anthropic).
+
+It builds on the following open-source projects:
+
+- [Segmentation Models](https://github.com/qubvel/segmentation_models)
+- [DDU — Deep Deterministic Uncertainty](https://github.com/omegafragger/DDU)
+- [CodeCarbon](https://github.com/mlco2/codecarbon)
+- [SelectiveCal](https://github.com/dwang181/selectivecal)
+
 ## License
 
 See [LICENSE](LICENSE).
