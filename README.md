@@ -88,6 +88,9 @@ It builds on the following open-source projects:
 - [DDU — Deep Deterministic Uncertainty](https://github.com/omegafragger/DDU)
 - [CodeCarbon](https://github.com/mlco2/codecarbon)
 - [SelectiveCal](https://github.com/dwang181/selectivecal)
+- [Hugging Face Transformers](https://github.com/huggingface/transformers)
+- [PEFT — Parameter-Efficient Fine-Tuning](https://github.com/huggingface/peft)
+- [TorchUncertainty](https://github.com/ENSTA-U2IS-AI/torch-uncertainty)
 
 ## License
 
